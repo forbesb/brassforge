@@ -25,22 +25,22 @@ class SimulatedAnnealing[Solution](neighbor: Solution=>Solution,
                                    acceptance: (Double, Double, Double) => Double = Defaults.defaultAcceptance) {
 
   def anneal(solution: Solution): (Solution, Double) = {
-    annealInternal(solution, cost(solution), initialTemperature)
+    val initialCost = cost(solution)
+    annealInternal(solution, initialCost, initialTemperature, (solution, initialCost))
   }
 
-  private def annealInternal(solution:Solution, currentCost: Double, temperature: Double): (Solution, Double) = {
+  private def annealInternal(solution:Solution, currentCost: Double, temperature: Double, best: (Solution, Double)): (Solution, Double) = {
     if (temperature > minimumTemperature) {
       val newSolution = neighbor(solution)
       val newCost = cost(newSolution)
 
       if (acceptance(newCost, currentCost, temperature) > Random.nextDouble()) {
-        annealInternal(newSolution, newCost, temperature * (1-coolingRate))
+        annealInternal(newSolution, newCost, temperature * (1-coolingRate), if (newCost > best._2 ) (newSolution, newCost) else best )
       } else {
-        annealInternal(solution, currentCost, temperature * (1-coolingRate))
+        annealInternal(solution, currentCost, temperature * (1-coolingRate), best)
       }
-
     } else {
-      (solution, currentCost)
+      if (currentCost > best._2) (solution, currentCost) else best
     }
   }
 }
