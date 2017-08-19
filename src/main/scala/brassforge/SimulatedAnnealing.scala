@@ -1,6 +1,6 @@
 // Author: Brian Forbes
 
-package main
+package brassforge
 
 import scala.util.Random
 
