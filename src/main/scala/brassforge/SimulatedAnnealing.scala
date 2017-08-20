@@ -5,11 +5,11 @@ package brassforge
 import scala.util.Random
 
 object Defaults {
-  val defaultCoolingRate = 0.03
+  val defaultCoolingRate = 0.003
   val defaultInitialTemperature = 10000.0
   val defaultMinimumTemperature = 1.0
   def defaultAcceptance(newCost: Double, oldCost: Double, temperature: Double): Double = {
-    if (newCost > oldCost) {
+    if (newCost < oldCost) {
       1.0
     } else {
       math.exp((oldCost - newCost) / temperature)
@@ -35,12 +35,12 @@ class SimulatedAnnealing[Solution](neighbor: Solution=>Solution,
       val newCost = cost(newSolution)
 
       if (acceptance(newCost, currentCost, temperature) > Random.nextDouble()) {
-        annealInternal(newSolution, newCost, temperature * (1-coolingRate), if (newCost > best._2 ) (newSolution, newCost) else best )
+        annealInternal(newSolution, newCost, temperature * (1-coolingRate), if (newCost < best._2 ) (newSolution, newCost) else best )
       } else {
         annealInternal(solution, currentCost, temperature * (1-coolingRate), best)
       }
     } else {
-      if (currentCost > best._2) (solution, currentCost) else best
+      if (currentCost < best._2) (solution, currentCost) else best
     }
   }
 }
