@@ -8,6 +8,7 @@ object Defaults {
   val defaultMinimumTemperature = 1.0
 
   val defaultPopulationSize = 50;
+  val defaultTournamentSize = 5;
   val defaultMutationRate = 0.015
   val defaultGenerations = 100;
 

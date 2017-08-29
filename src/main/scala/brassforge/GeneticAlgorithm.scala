@@ -7,7 +7,7 @@ class GeneticAlgorithm[Solution](initialize: Int => Set[Solution],
                                  fitness: Solution => Double,
                                  crossover: (Solution, Solution) => Solution,
                                  mutate: (Solution, Double) => Solution,
-                                 tournamentSize: Int,
+                                 tournamentSize: Int = Defaults.defaultTournamentSize,
                                  populationSize: Int = Defaults.defaultPopulationSize,
                                  maxGenerations: Int = Defaults.defaultGenerations,
                                  mutationRate: Double = Defaults.defaultMutationRate) {
