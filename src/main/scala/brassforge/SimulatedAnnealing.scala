@@ -4,19 +4,6 @@ package brassforge
 
 import scala.util.Random
 
-object Defaults {
-  val defaultCoolingRate = 0.003
-  val defaultInitialTemperature = 10000.0
-  val defaultMinimumTemperature = 1.0
-  def defaultAcceptance(newCost: Double, oldCost: Double, temperature: Double): Double = {
-    if (newCost < oldCost) {
-      1.0
-    } else {
-      math.exp((oldCost - newCost) / temperature)
-    }
-  }
-}
-
 class SimulatedAnnealing[Solution](neighbor: Solution=>Solution,
                                    cost: Solution => Double,
                                    coolingRate: Double = Defaults.defaultCoolingRate,
