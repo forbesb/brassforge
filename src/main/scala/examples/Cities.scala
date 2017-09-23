@@ -35,6 +35,7 @@ class Tour(cities: List[City]) {
     for (i <- 0 to cities.length - 1) {
     }
 
+    partner
   }
 
   def mutate(mutationRate: Double, startPosition: Int = 0): Tour = {
